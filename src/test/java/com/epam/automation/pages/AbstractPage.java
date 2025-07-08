@@ -12,10 +12,10 @@ public abstract class AbstractPage
 	protected static Logger log = LogManager.getRootLogger();
 
 	protected abstract AbstractPage openPage();
-	protected final int WAIT_TIMEOUT_SECONDS = 10;
+	public static final int WAIT_TIMEOUT_SECONDS = 10;
 
 	protected AbstractPage(WebDriver driver) {
 		this.driver = driver;
-		guiUtils = new GuiUtils(driver);
+		this.guiUtils = new GuiUtils(driver);
 	}
 }

@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 public class HomePage extends AbstractPage {
     private final String PAGE_URL = "https://anupdamoda.github.io/AceOnlineShoePortal/index.html";
-    public static By lnk_hamburger_menu = By.xpath("//div[@id='menuToggle']//input");
+    public static By lnk_hamburger_menu = By.xpath("//div[@id='menuToggle']/input");
 
 
     public static By getLnk_menu_option(String option) {
@@ -23,15 +23,17 @@ public class HomePage extends AbstractPage {
         return this;
     }
 
-    public SignInPage signIn() {
+    public SignInPage openMenu(String option) {
         try {
-            guiUtils.singleClick(driver.findElement(lnk_hamburger_menu));
-            guiUtils.singleClick(driver.findElement(getLnk_menu_option("Sign In Portal")));
+            driver.findElement(lnk_hamburger_menu).click();
+            guiUtils.singleClick(driver.findElement(getLnk_menu_option(option)));
         } catch (Exception e) {
-            log.error("The was an error while signing in the user.");
+            log.error("The was an error while opening in the menu. \n{}", e.getLocalizedMessage());
         }
         return new SignInPage(driver);
 
     }
+
+
 
 }

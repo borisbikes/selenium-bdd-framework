@@ -4,12 +4,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class DriverSingleton {
 
     private static WebDriver driver;
-    private static Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getRootLogger();
 
 
     private DriverSingleton(){}
@@ -18,17 +20,23 @@ public class DriverSingleton {
         try {
             if (null == driver) {
                 switch (System.getProperty("browser")) {
-                    case "firefox": {
+                    case "firefox":
                         driver = new FirefoxDriver();
-                    }
-                    default: {
+                        break;
+                    case "ie":
+                        driver = new InternetExplorerDriver();
+                        break;
+                    case "edge":
+                        driver = new EdgeDriver();
+                        break;
+                    default:
                         driver = new ChromeDriver();
-                    }
+
                 }
                 driver.manage().window().maximize();
             }
         } catch (Exception e) {
-            log.error("Failed to initialize the driver: " + e.getLocalizedMessage());
+            log.error("Failed to initialize the driver: {}", e.getLocalizedMessage());
         }
         return driver;
     }

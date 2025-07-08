@@ -1,6 +1,7 @@
 package com.epam.automation.step_definition;
 
 import com.epam.automation.pages.HomePage;
+import com.epam.automation.service.UserCreator;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -16,12 +17,15 @@ public class BasePage {
     @Given("User navigates to the login page")
     public void userNavigatesToTheLoginPage() {
         homePage = new HomePage(driver);
-        var cathalogName = homePage
+        var expectedValue = "Formal Shoes";
+        var optionMenu = "Sign In Portal";
+        var catalogName = homePage
                 .openPage()
-                .signIn()
+                .openMenu(optionMenu)
+                .signIn(UserCreator.withCredentialsFromProperty())
                 .getCatalogLoggedInUser();
         Assert.assertEquals("There was an issue signing in the home page",
-                cathalogName, "Formal Shoes");
+                expectedValue, catalogName);
     }
 
     @When("User successfully enter the log in details")
